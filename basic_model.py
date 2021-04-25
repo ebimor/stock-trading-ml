@@ -1,11 +1,13 @@
+
 import keras
 from keras.models import Model
 from keras.layers import Dense, Dropout, LSTM, Input, Activation
 from keras import optimizers
 import numpy as np
 np.random.seed(4)
-from tensorflow import set_random_seed
-set_random_seed(4)
+import tensorflow
+#from tensorflow import set_random_seed
+tensorflow.random.set_seed(4)
 from util import csv_to_dataset, history_points
 
 
