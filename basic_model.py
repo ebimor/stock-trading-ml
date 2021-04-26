@@ -4,16 +4,16 @@ from keras.models import Model
 from keras.layers import Dense, Dropout, LSTM, Input, Activation
 from keras import optimizers
 import numpy as np
-np.random.seed(4)
+np.random.seed(3)
 import tensorflow
 #from tensorflow import set_random_seed
-tensorflow.random.set_seed(4)
+tensorflow.random.set_seed(3)
 from util import csv_to_dataset, history_points
 
 
 # dataset
 
-ohlcv_histories, _, next_day_open_values, unscaled_y, y_normaliser = csv_to_dataset('MSFT_daily.csv')
+ohlcv_histories, _, next_day_open_values, unscaled_y, y_normaliser = csv_to_dataset('./data/MSFT_daily.csv')
 
 test_split = 0.9
 n = int(ohlcv_histories.shape[0] * test_split)
@@ -26,8 +26,8 @@ y_test = next_day_open_values[n:]
 
 unscaled_y_test = unscaled_y[n:]
 
-print(ohlcv_train.shape)
-print(ohlcv_test.shape)
+print("size of training dataset is ", ohlcv_train.shape)
+print("size of test dataset is ", ohlcv_test.shape)
 
 
 # model architecture
@@ -56,7 +56,7 @@ y_predicted = y_normaliser.inverse_transform(y_predicted)
 assert unscaled_y_test.shape == y_test_predicted.shape
 real_mse = np.mean(np.square(unscaled_y_test - y_test_predicted))
 scaled_mse = real_mse / (np.max(unscaled_y_test) - np.min(unscaled_y_test)) * 100
-print(scaled_mse)
+print("measn squared error is %f", scaled_mse)
 
 import matplotlib.pyplot as plt
 
@@ -76,4 +76,4 @@ plt.legend(['Real', 'Predicted'])
 plt.show()
 
 from datetime import datetime
-model.save(f'basic_model.h5')
+model.save(f'./model/basic_model.h5')

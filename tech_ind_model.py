@@ -4,15 +4,15 @@ from keras.models import Model
 from keras.layers import Dense, Dropout, LSTM, Input, Activation, concatenate
 from keras import optimizers
 import numpy as np
-np.random.seed(4)
-from tensorflow import set_random_seed
-set_random_seed(4)
+np.random.seed(3)
+#from tensorflow import set_random_seed
+tf.random.set_seed(3)
 from util import csv_to_dataset, history_points
 
 
 # dataset
 
-ohlcv_histories, technical_indicators, next_day_open_values, unscaled_y, y_normaliser = csv_to_dataset('MSFT_daily.csv')
+ohlcv_histories, technical_indicators, next_day_open_values, unscaled_y, y_normaliser = csv_to_dataset('./data/MSFT_daily.csv')
 
 test_split = 0.9
 n = int(ohlcv_histories.shape[0] * test_split)
@@ -91,4 +91,4 @@ plt.legend(['Real', 'Predicted'])
 plt.show()
 
 from datetime import datetime
-model.save(f'technical_model.h5')
+model.save(f'./model/technical_model.h5')

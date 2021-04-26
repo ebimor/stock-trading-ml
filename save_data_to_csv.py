@@ -19,7 +19,7 @@ def save_dataset(symbol, time_window):
 
     pprint(data.head(10))
 
-    data.to_csv(f'./{symbol}_{time_window}.csv')
+    data.to_csv(f'./data/{symbol}_{time_window}.csv')
 
 
 if __name__ == "__main__":
