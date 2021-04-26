@@ -1,14 +1,29 @@
 import pandas as pd
 from sklearn import preprocessing
 import numpy as np
+from finta import TA
+import mplfinance as mpf
+from pandas_datareader import data as web
 
 history_points = 50
 
 
 def csv_to_dataset(csv_path):
     data = pd.read_csv(csv_path)
-    data = data.drop('date', axis=1)
-    data = data.drop(0, axis=0)
+
+    #data = web.DataReader('^SPX', 'stooq')
+    #data.to_csv('./data/SPX.csv')
+
+    data = data.iloc[::-1]
+
+    data['RSI']= TA.RSI(data)
+    #data.to_csv('./data/SPX.csv')
+    print(data.columns)
+
+    data = data.drop("Date", axis=1)
+    data = data.drop([data.shape[0]-1, data.shape[0]-2, data.shape[0]-3])
+    data.to_csv('./data/withRSI.csv')
+
 
     data = data.values
 
