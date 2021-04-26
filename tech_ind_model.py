@@ -27,14 +27,14 @@ y_test = next_day_open_values[n:]
 
 unscaled_y_test = unscaled_y[n:]
 
-print(ohlcv_train.shape)
-print(ohlcv_test.shape)
+print("size of training dataset is ", ohlcv_train.shape)
+print("size of test dataset is ", ohlcv_test.shape)
 
 
 # model architecture
 
 # define two sets of inputs
-lstm_input = Input(shape=(history_points, 5), name='lstm_input')
+lstm_input = Input(shape=(history_points, ohlcv_train.shape[2]), name='lstm_input')
 dense_input = Input(shape=(technical_indicators.shape[1],), name='tech_input')
 
 # the first branch operates on the first input

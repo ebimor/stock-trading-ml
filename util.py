@@ -22,8 +22,6 @@ def csv_to_dataset(csv_path):
 
     data = data.drop("Date", axis=1)
     data = data.drop([data.shape[0]-1, data.shape[0]-2, data.shape[0]-3])
-    data.to_csv('./data/withRSI.csv')
-
 
     data = data.values
 
