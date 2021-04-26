@@ -2,9 +2,9 @@ import numpy as np
 from keras.models import load_model
 from util import csv_to_dataset, history_points
 
-model = load_model('technical_model.h5')
+model = load_model('./model/technical_model.h5')
 
-ohlcv_histories, technical_indicators, next_day_open_values, unscaled_y, y_normaliser = csv_to_dataset('MSFT_daily.csv')
+ohlcv_histories, technical_indicators, next_day_open_values, unscaled_y, y_normaliser = csv_to_dataset('./data/MSFT_daily.csv')
 
 test_split = 0.9
 n = int(ohlcv_histories.shape[0] * test_split)
@@ -30,10 +30,12 @@ start = 0
 end = -1
 
 x = -1
-for ohlcv, ind in zip(ohlcv_test[start: end], tech_ind_test[start: end]):
+for ohlcv, ind in zip(ohlcv_test[start: end], tech_ind_test[start:50:end]):
     normalised_price_today = ohlcv[-1][0]
     normalised_price_today = np.array([[normalised_price_today]])
     price_today = y_normaliser.inverse_transform(normalised_price_today)
+    print(ohlcv.shape)
+    print(ind.reshape((50, )))
     predicted_price_tomorrow = np.squeeze(y_normaliser.inverse_transform(model.predict([[ohlcv], [ind]])))
     delta = predicted_price_tomorrow - price_today
     if delta > thresh:
