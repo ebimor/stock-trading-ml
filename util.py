@@ -5,11 +5,12 @@ from finta import TA
 import mplfinance as mpf
 from pandas_datareader import data as web
 
-history_points = 50
+history_points = 60
 
 
 def csv_to_dataset(csv_path):
     data = pd.read_csv(csv_path)
+    data.columns = ["Date", "open", "high", "low", "close", "volume"]
 
     #data = web.DataReader('^SPX', 'stooq')
     #data.to_csv('./data/SPX.csv')
